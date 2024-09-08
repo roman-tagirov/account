@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Доступные комнаты{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Доступные комнаты</h2>
+    <ul>
+        {% for room in rooms %}
+        <li>
+            <a href="{% url 'room' room.id %}">{{ room.name }}</a>
+            {% if room.participants.count|add:1 == 1 %}
+                ( {{ room.participants.count|add:1 }} участник
+            {% elif room.participants.count|add:1 > 1 and room.participants.count|add:1 < 5 %}
+                ( {{ room.participants.count|add:1 }} участника
+            {% else %}
+                ( {{ room.participants.count|add:1 }} участников
+            {% endif %} из {{ room.max_participants }} )
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<a href="{% url 'home' %}">Главная</a>
+{% endblock %}

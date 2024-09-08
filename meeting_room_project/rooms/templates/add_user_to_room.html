@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить пользователя в комнату{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Добавить пользователя в комнату "{{ room.name }}"</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить пользователя</button>
+    </form>
+    <a href="{% url 'my_rooms' %}">Назад</a>
+</div>
+{% endblock %}

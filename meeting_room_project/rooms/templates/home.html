@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Добро пожаловать, {{ user.username }}!</h2>
+    <ul>
+        <li><a href="{% url 'create_room' %}">Создать комнату</a></li>
+        <li><a href="{% url 'my_rooms' %}">Мои комнаты</a></li>
+        <li><a href="{% url 'available_rooms' %}">Доступные комнаты</a></li>
+        <li><a href="{% url 'logout' %}">Выйти</a></li>
+    </ul>
+</div>
+
+{% endblock %}

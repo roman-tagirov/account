@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Комната {{ room.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Комната: {{ room.name }}</h2>
+    <p>Максимум участников: {{ room.max_participants }}</p>
+
+    <div id="messages">
+        <!-- AJAX -->
+    </div>
+
+    <form id="message-form" method="POST">
+        {% csrf_token %}
+        <input type="text" id="message-input" placeholder="Введите сообщение..." required>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <hr>
+
+    <h3>Добавить пользователя в комнату</h3>
+    <form id="add-user-form" method="POST" action="{% url 'add_user_to_room' room.id %}">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Введите логин пользователя" required>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <h3>Участники комнаты</h3>
+    <div id="participants-list">
+    {{room.admin}}
+        {% for user in room.participants.all %}
+            <div>
+                {{ user.username }}
+                {% if room.admin == request.user %}
+                    <form method="POST" action="{% url 'remove_user_from_room' room.id user.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Удалить</button>
+                    </form>
+                    <form method="POST" action="{% url 'block_user' user.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Заблокировать</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<a href="{% url 'home' %}">Главная</a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    const roomId = {{ room.id }};
+
+    function loadMessages() {
+        $.ajax({
+            url: "{% url 'get_messages' room.id %}",
+            method: "GET",
+            success: function(data) {
+                let messagesDiv = $('#messages');
+                messagesDiv.empty();
+                data.forEach(function(message) {
+                    messagesDiv.append(`<p><b>${message.sender__username}</b>: ${message.content}</p>`);
+                });
+            }
+        });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    setInterval(loadMessages, 3000);
+
+    $('#message-form').on('submit', function(e) {
+        e.preventDefault();
+        let messageContent = $('#message-input').val();
+
+        $.ajax({
+            url: "{% url 'room' room.id %}",
+            method: "POST",
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'message': messageContent,
+            },
+            success: function() {
+                $('#message-input').val('');
+                loadMessages();
+            }
+        });
+    });
+
+    loadMessages();
+</script>
+{% endblock %}

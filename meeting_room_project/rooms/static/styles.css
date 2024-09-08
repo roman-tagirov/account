@@ -1,0 +1,163 @@
+body {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9));
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    width: 40%;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #00ff00;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.5);
+    backdrop-filter: blur(15px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container div {
+    margin-bottom: 15px;
+    text-align: center;
+}
+input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 70px rgba(0, 255, 0, 1);
+    animation: glow 1s infinite alternate;
+}
+
+input, textarea, button {
+    background: rgba(0, 0, 0, 0.75);
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+input:focus, textarea:focus, button:focus {
+    background: #00ff00;
+    color: black;
+    border-color: #000;
+    outline: none;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 1);
+}
+
+button {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #00cc00;
+    color: black;
+    transform: scale(1.1);
+    box-shadow: 0 0 35px rgba(0, 204, 0, 1);
+    transition: transform 0.1s ease;
+}
+
+nav a {
+    color: #00ff00;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav a:hover {
+    text-decoration: underline;
+    color: #99ff99;
+    transform: scale(1.05);
+}
+
+a {
+    text-decoration: none;
+    color: #00ff00;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+a:hover {
+    color: #99ff99;
+    transform: scale(1.05);
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); }
+    100% { box-shadow: 0 0 40px rgba(0, 255, 0, 1); }
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+h1, h2, h3 {
+    animation: flicker 1.5s infinite alternate;
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+}
+
+/* Эффекты партиклов */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(0, 255, 0, 0.9);
+    pointer-events: none;
+    animation: particle-fall 1.5s infinite;
+}
+
+@keyframes particle-fall {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+.menu-1, .menu-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    margin: 10px 0;
+}
+
+.menu-1 ul, .menu-2 ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-1 li, .menu-2 li {
+    display: inline-block;
+    margin: 0 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.menu-2 {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border: 1px solid #00ff00;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
