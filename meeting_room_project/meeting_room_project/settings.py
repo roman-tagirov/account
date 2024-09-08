@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'your-secret-key-here'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['89.169.162.139', '89.169.162.139:8000', '10.129.0.29', '10.129.0.29:8000']
 
 # Приложения проекта
 INSTALLED_APPS = [
